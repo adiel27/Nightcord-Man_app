@@ -1,0 +1,13 @@
+#include "Artis.hpp"
+#include "Database.hpp"
+
+int main() {
+    sql::Connection* con = Database::koneksi();
+    if (con != nullptr) {
+        Artis artis1("Adiel Idol", "03 Juni 1995", "Pop", true, con);
+        artis1.simpanKeDatabase();
+        artis1.tampilkanInfo();
+        delete con;
+    }
+    return 0;
+}
