@@ -77,19 +77,53 @@ int main() {
                 break;
             }
             case 8: {
-                std::cout << "\n===== DATA ARTIS =====\n";
-                // Panggil fungsi `showData()` masing-masing
-                break;
-            }
+                    std::cout << "\n===== DATA ARTIS =====\n";
+                    auto* artisTemp = new Artis(0, "", "", "", false, conn);
+                    artisTemp->tampilkan();
+                    delete artisTemp;
 
-            default:
-                std::cout << "Pilihan tidak valid!\n";
+                    std::cout << "\n===== DATA KONTRAK =====\n";
+                    auto* kontrakTemp = new Kontrak(0, "", "", 0, "", conn);
+                    kontrakTemp->tampilkan();
+                    delete kontrakTemp;
 
-            case 9:
-                std::cout << "Keluar dari sistem...\n";
+                    std::cout << "\n===== DATA JADWAL EVENT =====\n";
+                    auto* eventTemp = new JadwalEvent(0, "", "", "", "", "", conn);
+                    eventTemp->tampilkan();
+                    delete eventTemp;
+
+                    std::cout << "\n===== DATA KEUANGAN =====\n";
+                    auto* keuanganTemp = new Keuangan(0, 0, "", conn);
+                    keuanganTemp->tampilkan();
+                    delete keuanganTemp;
+
+                    std::cout << "\n===== DATA MEDIA PROMOSI =====\n";
+                    auto* mediaTemp = new MediaPromosi(0, "", "", conn);
+                    mediaTemp->tampilkan();
+                    delete mediaTemp;
+
+                    std::cout << "\n===== DATA TIM MANAJEMEN =====\n";
+                    auto* timTemp = new TimManajemen(0, "", "", conn);
+                    timTemp->tampilkan();
+                    delete timTemp;
+
+                    std::cout << "\n===== DATA STATISTIK & ANALITIK =====\n";
+                    auto* statistikTemp = new StatistikAnalitik(0, "", conn);
+                    statistikTemp->tampilkan();
+                    delete statistikTemp;
                 break;
-                
-        }
+
+
+                }
+        case 9:
+            std::cout << "Keluar dari sistem...\n";
+        break;
+        
+        default:
+        std::cout << "Pilihan tidak valid!\n";
+        
+    }
+
     }
 
     delete conn;
