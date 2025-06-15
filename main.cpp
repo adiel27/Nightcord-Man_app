@@ -8,11 +8,12 @@
 #include "Entities/Statistik/InputStatistik.hpp"
 
 #include <iostream>
+#include <memory> // Smart pointers
 
 int main() {
-    // 🔗 Hubungkan ke Database MySQL
+    // 🔗 Hubungkan ke Database dengan hardcoded credentials
     sql::Driver* driver = get_driver_instance();
-    sql::Connection* conn = driver->connect("tcp://localhost:3306", "root", "password");
+    sql::Connection* conn = driver->connect("tcp://localhost:3306", "root", "");
     conn->setSchema("idol_management");
 
     int pilihan;
@@ -35,89 +36,56 @@ int main() {
 
         switch (pilihan) {
             case 1: {
-                auto* artis = InputArtis::masukkanData(conn);
-                artis->tampilkan();
-                delete artis;
+                auto artis = std::make_unique<InputArtis>(conn);
+                artis->masukkanData()->tampilkan();
                 break;
             }
             case 2: {
-                auto* kontrak = InputKontrak::masukkanData(conn);
-                kontrak->tampilkan();
-                delete kontrak;
+                auto kontrak = std::make_unique<InputKontrak>(conn);
+                kontrak->masukkanData()->tampilkan();
                 break;
             }
             case 3: {
-                auto* event = InputJadwalEvent::masukkanData(conn);
-                event->tampilkan();
-                delete event;
+                auto event = std::make_unique<InputJadwalEvent>(conn);
+                event->masukkanData()->tampilkan();
                 break;
             }
             case 4: {
-                auto* keuangan = InputKeuangan::masukkanData(conn);
-                keuangan->tampilkan();
-                delete keuangan;
+                auto keuangan = std::make_unique<InputKeuangan>(conn);
+                keuangan->masukkanData()->tampilkan();
                 break;
             }
             case 5: {
-                auto* media = InputMediaPromosi::masukkanData(conn);
-                media->tampilkan();
-                delete media;
+                auto media = std::make_unique<InputMediaPromosi>(conn);
+                media->masukkanData()->tampilkan();
                 break;
             }
             case 6: {
-                auto* tim = InputTimManajemen::masukkanData(conn);
-                tim->tampilkan();
-                delete tim;
+                auto tim = std::make_unique<InputTimManajemen>(conn);
+                tim->masukkanData()->tampilkan();
                 break;
             }
             case 7: {
-                auto* statistik = InputStatistik::masukkanData(conn);
-                statistik->tampilkan();
-                delete statistik;
+                auto statistik = std::make_unique<InputStatistik>(conn);
+                statistik->masukkanData()->tampilkan();
                 break;
             }
-                case 8: {
-        std::cout << "\n===== DATA ARTIS =====\n";
-        auto* artisTemp = new Artis(0, "", "", "", false, conn);
-        artisTemp->tampilkan();
-        delete artisTemp;
-
-        std::cout << "\n===== DATA KONTRAK =====\n";
-        auto* kontrakTemp = new Kontrak(0, "", "", 0, "", conn);
-        kontrakTemp->tampilkan();
-        delete kontrakTemp;
-
-        std::cout << "\n===== DATA JADWAL EVENT =====\n";
-        auto* eventTemp = new JadwalEvent(0, "", "", "", "", "", conn);
-        eventTemp->tampilkan();
-        delete eventTemp;
-
-        std::cout << "\n===== DATA KEUANGAN =====\n";
-        auto* keuanganTemp = new Keuangan(0, 0, "", conn);
-        keuanganTemp->tampilkan();
-        delete keuanganTemp;
-
-        std::cout << "\n===== DATA MEDIA PROMOSI =====\n";
-        auto* mediaTemp = new MediaPromosi(0, "", "", conn);
-        mediaTemp->tampilkan();
-        delete mediaTemp;
-
-        std::cout << "\n===== DATA TIM MANAJEMEN =====\n";
-        auto* timTemp = new TimManajemen(0, "", "", conn);
-        timTemp->tampilkan();
-        delete timTemp;
-
-        std::cout << "\n===== DATA STATISTIK & ANALITIK =====\n";
-        auto* statistikTemp = new StatistikAnalitik(0, "", conn);
-        statistikTemp->tampilkan();
-        delete statistikTemp;
-        break;
-}
-        break;
-        
-        default:
-        std::cout << "Pilihan tidak valid!\n";
-        
+            case 8: {
+                std::cout << "\n===== TAMPILKAN SEMUA DATA =====\n";
+                std::make_unique<Artis>(0, "", "", "", false, conn)->tampilkan();
+                std::make_unique<Kontrak>(0, "", "", 0, "", conn)->tampilkan();
+                std::make_unique<JadwalEvent>(0, "", "", "", "", "", conn)->tampilkan();
+                std::make_unique<Keuangan>(0, 0, "", conn)->tampilkan();
+                std::make_unique<MediaPromosi>(0, "", "", conn)->tampilkan();
+                std::make_unique<TimManajemen>(0, "", "", conn)->tampilkan();
+                std::make_unique<StatistikAnalitik>(0, "", conn)->tampilkan();
+                break;
+            }
+            default:
+                std::cout << "Pilihan tidak valid! Mohon masukkan angka 1-9.\n";
+                std::cin.clear();
+                std::cin.ignore(1000, '\n');
+        }
     }
 
     delete conn;
