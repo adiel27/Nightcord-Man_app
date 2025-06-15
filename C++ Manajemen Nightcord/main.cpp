@@ -81,8 +81,14 @@ int main() {
                 // Panggil fungsi `showData()` masing-masing
                 break;
             }
+
             default:
                 std::cout << "Pilihan tidak valid!\n";
+
+            case 9:
+                std::cout << "Keluar dari sistem...\n";
+                break;
+                
         }
     }
 
