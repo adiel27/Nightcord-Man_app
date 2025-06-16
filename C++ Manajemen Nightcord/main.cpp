@@ -115,10 +115,7 @@ int main() {
 
 
                 }
-        case 9:
-            std::cout << "Keluar dari sistem...\n";
-        break;
-        
+
         default:
         std::cout << "Pilihan tidak valid!\n";
         
